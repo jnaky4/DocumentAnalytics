@@ -6,8 +6,8 @@
 cmake-build-debug/
 
 #Cmake 
-.CMakeLists
-
+CMakeLists
+**/CMakeFiles/
 
 # File-based project format
 *.iws
@@ -24,3 +24,4 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+CMakeLists.txt

@@ -10,7 +10,7 @@
 using namespace std;
 string word;
 //key value using as a hash table
-std::map<std::string,int> hashTable;
+map<string,int> hashTable;
 
 class DataAnalytics{
 public:

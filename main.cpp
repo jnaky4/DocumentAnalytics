@@ -200,17 +200,21 @@ public:
     }
 
     void topWords(int topwords){
+        //will eventually store all words in descending order of value in key pair
         vector<pair<string,int>> topwordsVector;
+        //iterator
         map<string, int>::iterator it = hashTable.begin();
 
-
+        //push all pairs into vector and ignore keys less than 0
         for (it=hashTable.begin(); it!=hashTable.end(); it++){
             if(it->second >0){
                 topwordsVector.push_back(make_pair(it->first, it->second));
             }
 
         }
+        //call helper function sortval to sort vector
         sort(topwordsVector.begin(), topwordsVector.end(), sortByVal);
+        //print out # of top words passed as parameter
         for (int i = 0; i < topwords; i++)
         {
             cout << topwordsVector[i].first << ": " << topwordsVector[i].second << endl;

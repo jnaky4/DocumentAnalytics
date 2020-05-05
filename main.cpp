@@ -253,7 +253,7 @@ public:
     }
 
     void printword(string word){
-        cout << "word " << word << "count " <<  hashTable.at(word) << endl;
+        cout << "word " << word << " count " <<  hashTable.at(word) << endl;
     }
 };
 

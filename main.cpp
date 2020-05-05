@@ -186,10 +186,13 @@ public:
             cout << "Processing...Please Wait..\n";
             while(!inFS.eof()){
                 inFS >> readData;
+                //if no alphabet letters in string, string will return empty
                 word = clean(readData);
                 //cout << word << endl;
-                //perform the word ops here //
-                countWord(word);
+                //perform the word ops here //ignores empty strings
+                if(word != ""){
+                    countWord(word);
+                }
             }
             //when we have finished processing
             cout << "Finished Processing!\n";
@@ -215,6 +218,7 @@ public:
         //call helper function sortval to sort vector
         sort(topwordsVector.begin(), topwordsVector.end(), sortByVal);
         //print out # of top words passed as parameter
+        cout << "top " << topwords << " words found:" << endl;
         for (int i = 0; i < topwords; i++)
         {
             cout << topwordsVector[i].first << ": " << topwordsVector[i].second << endl;
@@ -244,5 +248,6 @@ int main() {
     //get the similarity between the two files word for word
     dataAnalytics.getSimilarity();
 
+    //find top # of words, based on number passed
     dataAnalytics.topWords(5);
 }

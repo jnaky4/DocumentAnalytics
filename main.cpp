@@ -9,6 +9,11 @@
 #include <string.h>
 using namespace std;
 
+bool sortByVal(const pair<string, int> &a,
+               const pair<string, int> &b)
+{
+    return (a.second > b.second);
+}
 
 class DataAnalytics{
 
@@ -68,7 +73,6 @@ public:
                 //set the new value for the hash table
                 hashTable[word]++;
             }
-            //catch block used to catch the error if the input is valid
         } catch (...) {
             //fires because we went out of range in the hash table meaning that the value is a new word that can be added
             //std::cout << "New Word Found" << "\n";
@@ -115,10 +119,12 @@ public:
         }
         return word;
     }
+
     void ignoreWord(){
-        string ignoreList[] = {"any", "in", "of", "or", "the", "to", "you", "with"};
-        for(int i = 0; i < ignoreList->size(); i++){
-            hashTable.insert(std::pair<std::string,int>(ignoreList[i],0));
+        vector<string> ignoreList = {"a", "and", "any", "for", "he", "his", "i", "in", "of", "or", "that", "the", "they", "to", "you", "with"};
+        for(int i = 0; i < ignoreList.size(); i++){
+            //cout << ignoreList[i] << endl;
+            hashTable.insert(pair<string,int>(ignoreList[i],0));
         }
 
     }
@@ -180,10 +186,13 @@ public:
             cout << "Processing...Please Wait..\n";
             while(!inFS.eof()){
                 inFS >> readData;
+                //if no alphabet letters in string, string will return empty
                 word = clean(readData);
                 //cout << word << endl;
-                //perform the word ops here //
-                countWord(word);
+                //perform the word ops here //ignores empty strings
+                if(word != ""){
+                    countWord(word);
+                }
             }
             //when we have finished processing
             cout << "Finished Processing!\n";
@@ -193,8 +202,31 @@ public:
         }
     }
 
+    void topWords(int topwords){
+        //will eventually store all words in descending order of value in key pair
+        vector<pair<string,int>> topwordsVector;
+        //iterator
+        map<string, int>::iterator it = hashTable.begin();
+
+        //push all pairs into vector and ignore keys less than 0
+        for (it=hashTable.begin(); it!=hashTable.end(); it++){
+            if(it->second >0){
+                topwordsVector.push_back(make_pair(it->first, it->second));
+            }
+
+        }
+        //call helper function sortval to sort vector
+        sort(topwordsVector.begin(), topwordsVector.end(), sortByVal);
+        //print out # of top words passed as parameter
+        cout << "top " << topwords << " words found:" << endl;
+        for (int i = 0; i < topwords; i++)
+        {
+            cout << topwordsVector[i].first << ": " << topwordsVector[i].second << endl;
+        }
+    }
 
 };
+
 
 
 
@@ -217,5 +249,6 @@ int main() {
     //get the similarity between the two files word for word
     dataAnalytics.getSimilarity();
 
-
+    //find top # of words, based on number passed
+    dataAnalytics.topWords(5);
 }

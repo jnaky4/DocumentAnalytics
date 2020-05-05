@@ -206,7 +206,6 @@ int main() {
     //driver function that performs all internal operations
     dataAnalytics.analyzeCount();
 
-
     //when we have finished processing the file perform analysis //
     dataAnalytics.searchOccurrences("day");
 

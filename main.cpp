@@ -32,7 +32,6 @@ public:
     DataAnalytics(){};
 
 
-
     //function used to to compare two files
     void compareTwoFiles(string string1, string string2){
         //biggest file
@@ -113,9 +112,7 @@ public:
                 if(!isalpha(word.at(i))){
                     word.erase(i);
                 }
-
             }
-
         }
         return word;
     }
@@ -126,7 +123,6 @@ public:
             //cout << ignoreList[i] << endl;
             hashTable.insert(pair<string,int>(ignoreList[i],0));
         }
-
     }
 
 
@@ -167,7 +163,6 @@ public:
             cerr << msg << endl;
         }
     }
-
 
 
     //driver function that will analyze the file for word count
@@ -213,7 +208,6 @@ public:
             if(it->second >0){
                 topwordsVector.push_back(make_pair(it->first, it->second));
             }
-
         }
         //call helper function sortval to sort vector
         sort(topwordsVector.begin(), topwordsVector.end(), sortByVal);
@@ -224,6 +218,47 @@ public:
             cout << topwordsVector[i].first << ": " << topwordsVector[i].second << endl;
         }
     }
+
+    //function used to find and replace a word in the file and output a new file
+    void findAndReplace(string findWord, string replaceWord, string newFileName){
+        string word;
+        ifstream inFS;
+        string readData;
+        // Create and open a text file
+        ofstream newFile(newFileName);
+        try{
+            inFS.open("Bible");
+            if(!inFS.is_open()){
+                throw "File is empty";
+            }
+            cout << "Processing...Please Wait..\n";
+            while(!inFS.eof()){
+                inFS >> readData;
+                //cout << word << endl;
+                //perform the word ops here //ignores empty strings
+                if(readData != ""){
+                    //if no alphabet letters in string, string will return empty
+                    word = clean(readData);
+                    //check to see if this is the word we want to replace
+                    if(word == findWord){
+                        //change the word
+                        word = replaceWord;
+                    }
+                    // Write to the file
+                    newFile << word;
+                    newFile << " ";
+                }
+            }
+            //when we have finished processing
+            cout << "Finished Processing!\n";
+        }
+        catch(const char* msg) {
+            cerr << msg << endl;
+        }
+        // Close the file
+        newFile.close();
+    }
+
 
 };
 
@@ -251,4 +286,8 @@ int main() {
 
     //find top # of words, based on number passed
     dataAnalytics.topWords(5);
+
+    //function used to find a replace a new file
+    dataAnalytics.findAndReplace("day","night","newfile.txt");
+
 }

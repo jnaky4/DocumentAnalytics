@@ -121,7 +121,17 @@ public:
     }
 
     void ignoreWord(){
-        vector<string> ignoreList = {"a", "and", "any", "for", "he", "his", "i", "in", "of", "or", "that", "the", "they", "to", "you", "with"};
+        vector<string> ignoreList = {"a", "all", "and", "any", "after",
+                                     "be", "because",
+                                     "every",
+                                     "for",
+                                     "he", "his", "him",
+                                     "i", "is", "in", "it",
+                                     "not",
+                                     "of", "or",
+                                     "that", "the", "their", "them", "there", "they", "to", "these",
+                                     "you",
+                                     "with", "which"};
         for(int i = 0; i < ignoreList.size(); i++){
             //cout << ignoreList[i] << endl;
             hashTable.insert(pair<string,int>(ignoreList[i],0));
@@ -190,7 +200,7 @@ public:
                 word = clean(readData);
                 //cout << word << endl;
                 //perform the word ops here //ignores empty strings
-                if(word != ""){
+                if(word != "" && word.size() > 4){
                     countWord(word);
                 }
             }
@@ -249,5 +259,5 @@ int main() {
     dataAnalytics.getSimilarity();
 
     //find top # of words, based on number passed
-    dataAnalytics.topWords(5);
+    dataAnalytics.topWords(20);
 }

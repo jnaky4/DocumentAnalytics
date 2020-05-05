@@ -9,6 +9,11 @@
 #include <string.h>
 using namespace std;
 
+bool sortByVal(const pair<string, int> &a,
+               const pair<string, int> &b)
+{
+    return (a.second > b.second);
+}
 
 class DataAnalytics{
 
@@ -115,8 +120,9 @@ public:
         }
         return word;
     }
+
     void ignoreWord(){
-        string ignoreList[] = {"any", "in", "of", "or", "the", "to", "you", "with"};
+        string ignoreList[] = {"and", "any", "in", "of", "or", "that", "the", "to", "you", "with"};
         for(int i = 0; i < ignoreList->size(); i++){
             hashTable.insert(std::pair<std::string,int>(ignoreList[i],0));
         }
@@ -193,8 +199,26 @@ public:
         }
     }
 
+    void topWords(int topwords){
+        vector<pair<string,int>> topwordsVector;
+        map<string, int>::iterator it = hashTable.begin();
+
+
+        for (it=hashTable.begin(); it!=hashTable.end(); it++){
+            if(it->second >0){
+                topwordsVector.push_back(make_pair(it->first, it->second));
+            }
+
+        }
+        sort(topwordsVector.begin(), topwordsVector.end(), sortByVal);
+        for (int i = 0; i < topwords; i++)
+        {
+            cout << topwordsVector[i].first << ": " << topwordsVector[i].second << endl;
+        }
+    }
 
 };
+
 
 
 
@@ -216,5 +240,5 @@ int main() {
     //get the similarity between the two files word for word
     dataAnalytics.getSimilarity();
 
-
+    dataAnalytics.topWords(5);
 }

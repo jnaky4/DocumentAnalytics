@@ -73,7 +73,6 @@ public:
                 //set the new value for the hash table
                 hashTable[word]++;
             }
-            //catch block used to catch the error if the input is valid
         } catch (...) {
             //fires because we went out of range in the hash table meaning that the value is a new word that can be added
             //std::cout << "New Word Found" << "\n";
@@ -122,9 +121,10 @@ public:
     }
 
     void ignoreWord(){
-        string ignoreList[] = {"and", "any", "in", "of", "or", "that", "the", "to", "you", "with"};
-        for(int i = 0; i < ignoreList->size(); i++){
-            hashTable.insert(std::pair<std::string,int>(ignoreList[i],0));
+        vector<string> ignoreList = {"a", "and", "any", "for", "he", "his", "i", "in", "of", "or", "that", "the", "they", "to", "you", "with"};
+        for(int i = 0; i < ignoreList.size(); i++){
+            //cout << ignoreList[i] << endl;
+            hashTable.insert(pair<string,int>(ignoreList[i],0));
         }
 
     }

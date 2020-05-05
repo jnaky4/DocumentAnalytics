@@ -24,7 +24,18 @@ private:
     int totalChars = 0;
     //total number of matches in the file
     int totalMatches = 0;
-
+    vector<string> ignoreList = {"a", "all", "and", "any", "after", "among", "again", "about",
+                                 "be", "because", "before", "bring",
+                                 "every",
+                                 "for",
+                                 "he", "his", "him",
+                                 "i", "is", "in", "it",
+                                 "not", "neither",
+                                 "of", "or",
+                                 "saying", "should",
+                                 "that", "the", "their", "them", "there", "they", "to", "these", "therefore", "things",
+                                 "you",
+                                 "what", "with", "which"};
 
 public:
 
@@ -66,10 +77,6 @@ public:
             //this is fast 0(1) to find out
             if (hashTable.at(word) > 0) {
                 //checks to see if the value is already in the hash table, if it is add to the count
-                //cout << "Word already in the hash table \n";
-                //cout << "Word: " << word << " Count: " << hashTable.at(word) << "\n";
-                //get the current value of the item in the hash table
-                int newValue =  hashTable.at(word) + 1;
                 //set the new value for the hash table
                 hashTable[word]++;
             }
@@ -121,17 +128,7 @@ public:
     }
 
     void ignoreWord(){
-        vector<string> ignoreList = {"a", "all", "and", "any", "after",
-                                     "be", "because",
-                                     "every",
-                                     "for",
-                                     "he", "his", "him",
-                                     "i", "is", "in", "it",
-                                     "not",
-                                     "of", "or",
-                                     "that", "the", "their", "them", "there", "they", "to", "these",
-                                     "you",
-                                     "with", "which"};
+
         for(int i = 0; i < ignoreList.size(); i++){
             //cout << ignoreList[i] << endl;
             hashTable.insert(pair<string,int>(ignoreList[i],0));
@@ -235,6 +232,29 @@ public:
         }
     }
 
+    void addtoignore(string ignore){
+        ignoreList.push_back(ignore);
+    }
+    void updateignore(string ignore){
+        try {
+            //checks to see if the value is in the hashtable
+            //this is fast 0(1) to find out
+            if (hashTable.at(ignore) != 0) {
+                hashTable.erase(ignore);
+                hashTable[ignore] = 0;
+            }
+            else{
+                cout << "word already ignored" << endl;
+            }
+        }catch (...) {
+            cout << "word " << ignore << " not in list" << endl;
+        }
+
+    }
+
+    void printword(string word){
+        cout << "word " << word << "count " <<  hashTable.at(word) << endl;
+    }
 };
 
 
@@ -259,5 +279,10 @@ int main() {
     dataAnalytics.getSimilarity();
 
     //find top # of words, based on number passed
-    dataAnalytics.topWords(20);
+    dataAnalytics.topWords(30);
+
+
+    //for GUI to update and print word counts
+    dataAnalytics.updateignore("called");
+    dataAnalytics.printword("called");
 }

@@ -255,6 +255,46 @@ public:
     void printword(string word){
         cout << "word " << word << " count " <<  hashTable.at(word) << endl;
     }
+
+    //function used to find and replace a word in the file and output a new file
+    void findAndReplace(string findWord, string replaceWord, string newFileName){
+        string word;
+        ifstream inFS;
+        string readData;
+        // Create and open a text file
+        ofstream newFile(newFileName);
+        try{
+            inFS.open("Bible");
+            if(!inFS.is_open()){
+                throw "File is empty";
+            }
+            cout << "Processing...Please Wait..\n";
+            while(!inFS.eof()){
+                inFS >> readData;
+                //cout << word << endl;
+                //perform the word ops here //ignores empty strings
+                if(readData != ""){
+                    //if no alphabet letters in string, string will return empty
+                    word = clean(readData);
+                    //check to see if this is the word we want to replace
+                    if(word == findWord){
+                        //change the word
+                        word = replaceWord;
+                    }
+                    // Write to the file
+                    newFile << word;
+                    newFile << " ";
+                }
+            }
+            //when we have finished processing
+            cout << "Finished Processing!\n";
+        }
+        catch(const char* msg) {
+            cerr << msg << endl;
+        }
+        // Close the file
+        newFile.close();
+    }
 };
 
 
@@ -285,4 +325,7 @@ int main() {
     //for GUI to update and print word counts
     dataAnalytics.updateignore("called");
     dataAnalytics.printword("called");
+
+    //function used to find a replace a new file
+    dataAnalytics.findAndReplace("day","night","newfile.txt");
 }

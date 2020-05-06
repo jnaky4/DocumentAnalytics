@@ -44,7 +44,6 @@ public:
     DataAnalytics(){};
 
 
-
     //function used to to compare two files
     void compareTwoFiles(string string1, string string2){
         //biggest file
@@ -121,9 +120,7 @@ public:
                 if(!isalpha(word.at(i))){
                     word.erase(i);
                 }
-
             }
-
         }
         return word;
     }
@@ -134,7 +131,6 @@ public:
             //cout << ignoreList[i] << endl;
             hashTable.insert(pair<string,int>(ignoreList[i],0));
         }
-
     }
 
 
@@ -175,7 +171,6 @@ public:
             cerr << msg << endl;
         }
     }
-
 
 
     //driver function that will analyze the file for word count
@@ -221,7 +216,6 @@ public:
             if(it->second >0){
                 topwordsVector.push_back(make_pair(it->first, it->second));
             }
-
         }
         //call helper function sortval to sort vector
         sort(topwordsVector.begin(), topwordsVector.end(), sortByVal);
@@ -306,6 +300,7 @@ int main() {
 
     //instance obj to the analysis class
     DataAnalytics dataAnalytics;
+
     //driver function that performs all internal operations
     dataAnalytics.analyzeCount();
 

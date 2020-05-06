@@ -174,13 +174,13 @@ public:
 
 
     //driver function that will analyze the file for word count
-    void analyzeCount(){
+    void analyzeCount(string fileName){
         //performs all operations on the input file so we can access the data from it later
         string word;
         ifstream inFS;
         string readData;
         try{
-            inFS.open("import.txt");
+            inFS.open(fileName);
             if(!inFS.is_open()){
                 throw "File is empty";
             }
@@ -290,6 +290,79 @@ public:
         // Close the file
         newFile.close();
     }
+
+
+    //function used to get input from the user
+    void getInput() {
+
+        //input values
+        string file1name;
+        string file2name;
+        string searchWord;
+        string replacedWord;
+        bool getInput = true;
+        //the input
+        int value;
+        //values that may be needed based on inputs
+        while(getInput == true) {
+            cout << "Select an operation\n";
+            cout << "1 : Analyze word count\n";
+            cout << "2 : Search Occurrences of a word\n";
+            cout << "3 : Analyze Similarity\n";
+            cout << "4 : Top Word\n";
+            cout << "5 : Find and Replace\n";
+            cout << "6 : Quit Program\n";
+            cin >> value;
+            //switch based on the input
+            switch (value) {
+
+                case 1:
+                    //this is the case for analyze word count
+                    cout << "Enter the file name\n";
+                    cin >> file1name;
+                    analyzeCount(file1name);
+                    break;
+                case 2:
+                    //this is the case for search occurrences of a word
+                    cout << "Enter the word you want to search\n";
+                    //input the word
+                    cin >> searchWord;
+                    //search for the word
+                    searchOccurrences(searchWord);
+                    break;
+                case 3:
+                    //this is the case for analyze similarity
+                    cout << "Enter the first file name\n";
+                    cin >> file1name;
+                    cout << "Enter the second file name\n";
+                    cin >> file2name;
+                    //call the function to analyze the similarity
+                    analyzeSimilarity("import.txt", "import.txt");
+                    break;
+                case 4:
+                    cout << "The top 5 words are : \n";
+                    //this is the top word
+                    topWords(5);
+                    break;
+                case 5:
+                    cout << "Enter the file name\n";
+                    cin >> file1name;
+                    cout << "Enter the search word\n";
+                    cin >> searchWord;
+                    cout << "Enter the replace word\n";
+                    cin >> replacedWord;
+                    //this is the find and replace case
+                    findAndReplace(searchWord, replacedWord, file1name);
+                case 6:
+                    getInput = false;
+                    exit(0);
+                default:
+                    cout << "This is the default case\n";
+            }
+
+        }
+
+    }
 };
 
 
@@ -298,11 +371,16 @@ public:
 
 int main() {
 
+
+
+
     //instance obj to the analysis class
     DataAnalytics dataAnalytics;
+    //used to get input from the user
+    dataAnalytics.getInput();
 
     //driver function that performs all internal operations
-    dataAnalytics.analyzeCount();
+    dataAnalytics.analyzeCount("import.txt");
 
     //when we have finished processing the file perform analysis //
     dataAnalytics.searchOccurrences("day");

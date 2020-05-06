@@ -1,12 +1,13 @@
 #include <iostream>
-#include <cstdlib>
 #include <fstream>
 #include <string>
 #include <cctype>
 #include <algorithm>
 #include <vector>
 #include <map>
-#include <string.h>
+
+
+
 using namespace std;
 
 bool sortByVal(const pair<string, int> &a,
@@ -184,7 +185,7 @@ public:
         ifstream inFS;
         string readData;
         try{
-            inFS.open("Bible");
+            inFS.open("import.txt");
             if(!inFS.is_open()){
                 throw "File is empty";
             }
@@ -264,7 +265,7 @@ public:
         // Create and open a text file
         ofstream newFile(newFileName);
         try{
-            inFS.open("Bible");
+            inFS.open("import.txt");
             if(!inFS.is_open()){
                 throw "File is empty";
             }
@@ -313,7 +314,7 @@ int main() {
 
 
     //driver function that performs internal operations on simularity
-    dataAnalytics.analyzeSimilarity("Bible","Bible");
+    dataAnalytics.analyzeSimilarity("import.txt", "import.txt");
 
     //get the similarity between the two files word for word
     dataAnalytics.getSimilarity();
@@ -327,5 +328,7 @@ int main() {
     dataAnalytics.printword("called");
 
     //function used to find a replace a new file
-    dataAnalytics.findAndReplace("day","night","newfile.txt");
+    dataAnalytics.findAndReplace("day", "night", "newfile.txt");
+
+
 }
